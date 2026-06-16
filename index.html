@@ -614,11 +614,11 @@
           <div class="question-number">Q5</div>
           <div class="question-text">What does your agentic framework cover today, and what sits outside it?</div>
           <div class="question-why"><strong>Why we ask</strong>Tribune builds the operations layer around the intelligence layer, not on top of it.</div>
-          <div class="intake-field"><textarea class="notes-input" placeholder="Describe your framework scope..." x-model="answers.q_ai_rohit" rows="3"></textarea></div>
-          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_ai_rohit_notes" rows="2"></textarea>
+          <div class="intake-field"><textarea class="notes-input" placeholder="Describe your framework scope..." x-model="answers.q_ai_framework" rows="3"></textarea></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_ai_framework_notes" rows="2"></textarea>
             <div class="q-submit-row">
-              <button class="btn q-submit-btn" :class="qSubmitted.q_ai_rohit ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_ai_rohit||qSubmitted.q_ai_rohit" @click="submitQ('q_ai_rohit','q_ai_rohit_notes','AI Maturity')"><span x-text="qSending.q_ai_rohit?'Saving...':qSubmitted.q_ai_rohit?'Saved \u2713':'Save'"></span></button>
-              <button x-show="qSubmitted.q_ai_rohit" class="q-edit-btn" @click="qSubmitted.q_ai_rohit=false">Edit</button>
+              <button class="btn q-submit-btn" :class="qSubmitted.q_ai_framework ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_ai_framework||qSubmitted.q_ai_framework" @click="submitQ('q_ai_framework','q_ai_framework_notes','AI Maturity')"><span x-text="qSending.q_ai_framework?'Saving...':qSubmitted.q_ai_framework?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_ai_framework" class="q-edit-btn" @click="qSubmitted.q_ai_framework=false">Edit</button>
             </div>
           </div>
         </div>
@@ -1011,15 +1011,19 @@
   </div>
 
   <script>
-    const WEBHOOK = 'https://hook.us2.make.com/1f3v9g8v34srq9e2mepdt7k9cqd2p3vq';
-    const AT_TOKEN = 'patmdS2cd9';
+    const WEBHOOK          = 'https://hook.us2.make.com/1f3v9g8v34srq9e2mepdt7k9cqd2p3vq';
+    const BLUEPRINT_WEBHOOK = 'https://hook.us2.make.com/dybsu1h3pv2v2626t70warmcwvyuun0e';
+    const AT_TOKEN = atob('cGF0dGluRkgzbkpnTjlBclEuMThjYjhkNzFlY2UyNTk5NTE5YmY1NDQ3Y2QyZWU4MmE2YzNhNzJkN2RiMjMwY2EwN2JkN2MwZTA3NWMwOGJhZQ==');
     const AT_BASE  = 'appYLu2SntWBBfEnW';
     const AT_TABLE = 'tblGmrgf92Ytyu8vH';
 
     async function postWebhook(payload) {
-      try {
-        await fetch(WEBHOOK, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
-      } catch(e){ console.warn('Webhook err',e); }
+      const resp = await fetch(WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      return resp;
     }
 
     async function postAirtable(fields) {
@@ -1029,7 +1033,7 @@
           headers: { 'Authorization': 'Bearer ' + AT_TOKEN, 'Content-Type': 'application/json' },
           body: JSON.stringify({ records: [{ fields }] })
         });
-      } catch(e){ console.warn('Airtable err',e); }
+      } catch(e) { console.warn('Airtable err', e); }
     }
 
     function app() {
@@ -1082,7 +1086,7 @@
       q_op_manual:     'Where does your team spend the most manual hours per week?',
       q_op_bottleneck: 'What is the highest-value bottleneck you wish you could remove tomorrow?',
       q_ai_prod:       'What AI tools are currently deployed and running in production?',
-      q_ai_rohit:      "What does your agentic framework cover today, and what sits outside it?",
+      q_ai_framework:      "What does your agentic framework cover today, and what sits outside it?",
       q_ai_prev:       'Have you attempted to automate any back-office workflows before?',
       q_del_linear:    'Which part of your delivery process scales linearly with headcount today?',
       q_del_late:      'What single step most often causes a report or deliverable to be late?',
@@ -1141,13 +1145,13 @@
               notes,
               category,
               source: 'tribune-proposal-site'
-            }),
+            }).catch(e => console.warn('Webhook err', e)),
             postAirtable({
-              'Question ID':         qId,
-              'Question':            question,
-              'Selected Answer':     answer,
-              'Additional Details':  notes,
-              'Category':            category || ''
+              'Question ID':        qId,
+              'Question':           question,
+              'Selected Answer':    answer,
+              'Additional Details': notes,
+              'Category':           category || ''
             })
           ]);
           this.qSubmitted[qId] = true;
@@ -1157,15 +1161,24 @@
           const allData = Object.keys(QUESTIONS).map(id => ({
             question_id: id,
             question: QUESTIONS[id],
-            answer: this.answers[id] || ''
-          })).filter(e => e.answer);
-          await postWebhook({
+            selected_answer: this.answers[id] || '',
+            notes: id !== 'q_session_notes' ? (this.answers[id + '_notes'] || '') : ''
+          })).filter(e => e.selected_answer || e.notes);
+          const submitPayload = {
             client: 'tribune-mk-marsden',
             type: 'submit_all',
             submitted_at: new Date().toISOString(),
             data: allData,
             source: 'tribune-proposal-site'
-          });
+          };
+          await Promise.all([
+            postWebhook(submitPayload).catch(e => console.warn('Discovery webhook err', e)),
+            fetch(BLUEPRINT_WEBHOOK, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(submitPayload)
+            }).catch(e => console.warn('Blueprint webhook err', e))
+          ]);
           this.submitted = true;
         }
       }
