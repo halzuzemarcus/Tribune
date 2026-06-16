@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tribune, prepared for MK Marsden</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    .edition-toggle-wrap { margin-bottom: 0; }
+    .edition-toggle { display:inline-flex; gap:0.25rem; background:rgba(0,0,0,0.04); border:1px solid var(--border); border-radius:8px; padding:4px; margin-bottom:1.5rem; }
+    .edition-btn { padding:0.45rem 1.25rem; border-radius:6px; font-size:0.85rem; font-weight:600; background:none; border:none; color:var(--text-soft); cursor:pointer; transition:all 0.2s ease; font-family:var(--font); }
+    .edition-btn.active { background:#fff; color:var(--text); box-shadow:0 1px 6px rgba(0,0,0,0.12); }
+    .edition-subhead { font-size:0.8rem; color:var(--text-dim); font-style:italic; margin-bottom:1.5rem; }
+    .paradox-section { background:linear-gradient(135deg,#0c0c10 0%,#1a1a26 100%); padding:6rem 0; text-align:center; color:#f0f0f5; }
+    .paradox-quote { font-size:clamp(1.3rem,2.5vw,1.9rem); font-weight:700; font-style:italic; max-width:720px; margin:0 auto 1.5rem; line-height:1.4; color:#f0f0f5; }
+    .paradox-sub { font-size:0.95rem; color:rgba(240,240,245,0.65); max-width:500px; margin:0 auto; }
+    .proof-chips { display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:1.5rem; }
+    .proof-chip { background:var(--bg-card); border:1px solid var(--border-accent); border-radius:6px; padding:0.5rem 1rem; font-size:0.82rem; font-weight:600; color:var(--text-soft); }
+    .ai-org-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:1.5rem; }
+    .ai-org-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem; text-align:center; }
+    .ai-org-name { font-size:0.9rem; font-weight:700; color:var(--crimson); margin-bottom:0.25rem; }
+    .ai-org-role { font-size:0.72rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; }
+    .ai-org-desc { font-size:0.8rem; color:var(--text-soft); margin-top:0.5rem; }
+    .think-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:2rem; }
+    .think-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:1.75rem; }
+    .think-card-title { font-size:1rem; font-weight:700; margin-bottom:0.75rem; }
+    .think-card-body { font-size:0.85rem; color:var(--text-soft); line-height:1.65; margin-bottom:1rem; }
+    .diagram-wrap { margin:1.25rem 0; display:flex; justify-content:center; }
+    .math-prose { font-size:0.92rem; color:var(--text-soft); line-height:1.75; max-width:700px; margin:1.5rem 0; }
+    .math-context { font-size:0.82rem; color:var(--text-dim); font-style:italic; margin-top:0.75rem; }
+    @media(max-width:900px){ .think-grid{grid-template-columns:1fr;} .ai-org-grid{grid-template-columns:repeat(2,1fr);} }
+  </style>
+</head>
+<body x-data="app()" x-init="init()">
+
+  <!-- HEADER -->
+  <header class="site-header" :class="{ scrolled: scrolled }">
+    <div class="header-logo" style="cursor:pointer;" @click="tab='proposal'; window.scrollTo({top:0,behavior:'smooth'})">
+      <img src="https://res.cloudinary.com/dthdxjmgb/image/upload/h_112,c_scale,f_auto,q_100/v1781045601/mxxi/rj-logo-cropped.jpg" alt="Tribune" class="header-logo-img" />
+    </div>
+    <div class="header-tabs">
+      <button class="tab-btn" :class="{ active: tab === 'proposal' }" @click="tab = 'proposal'">The Proposal</button>
+      <button class="tab-btn" :class="{ active: tab === 'script' }" @click="tab = 'script'">Discovery</button>
+      <button class="tab-btn blueprint-tab-btn" :class="{ active: tab === 'blueprint' }" @click="tab = 'blueprint'">Your Blueprint</button>
+    </div>
+    <div class="header-cta">
+      <button class="btn btn-crimson" @click="tab='script'; window.scrollTo({top:0,behavior:'smooth'})">Begin Discovery</button>
+    </div>
+  </header>
+
+  <!-- PROGRESS NAV -->
+  <nav class="progress-nav" x-show="tab === 'proposal'">
+    <template x-for="(section, idx) in sections" :key="idx">
+      <div class="dot" :class="{ active: activeSection === idx }" @click="scrollToSection(idx)" :title="section.label"></div>
+    </template>
+  </nav>
+
+  <!-- ══════════ PROPOSAL TAB ══════════ -->
+  <div x-show="tab === 'proposal'" x-cloak>
+
+    <!-- HERO -->
+    <section id="hero" data-section="0">
+      <div class="hero-fallback"></div>
+      <video class="hero-video" autoplay muted loop playsinline onerror="this.style.display='none'">
+        <source src="https://www.pexels.com/download/video/3129957/" type="video/mp4" />
+      </video>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">Confidential. Prepared exclusively for MK Marsden.</p>
+        <h1 class="hero-headline">
+          <span class="grad-text">We Build Your AI Workforce.</span><br />Then We Unplug.
+        </h1>
+        <p class="hero-sub">Tribune designs, trains, and deploys a complete agentic AI organization inside the tools your team already uses. Then we hand it off for you to own and run independently.</p>
+        <button class="btn btn-crimson" style="font-size:1rem;padding:0.9rem 2rem;" @click="tab='script'; window.scrollTo({top:0,behavior:'smooth'})">
+          Begin Discovery
+        </button>
+      </div>
+      <div class="hero-scroll">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </section>
+
+    <!-- STAT CARDS -->
+    <section style="padding:3rem 0;background:var(--bg);">
+      <div class="container">
+        <div class="stat-grid">
+          <div class="stat-card fade-in">
+            <div class="stat-value">42%</div>
+            <div class="stat-label">AI projects abandoned before production in 2025. The deployment gap Tribune removes.</div>
+          </div>
+          <div class="stat-card fade-in">
+            <div class="stat-value">$165k+</div>
+            <div class="stat-label">Net Year 1 advantage from one back-office build, for a single small practice. Before recovery is even counted.</div>
+          </div>
+          <div class="stat-card fade-in">
+            <div class="stat-value">780 hrs</div>
+            <div class="stat-label">Manual work per person, per year, that an agentic operations layer reclaims.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE PROBLEM -->
+    <section id="problem" data-section="1" style="background:var(--bg-soft);">
+      <div class="container">
+        <p class="section-label fade-in">The Problem</p>
+        <h2 class="section-headline fade-in">The Intelligence Is Solved. The Operation Behind It Is Not.</h2>
+        <p style="color:var(--text-soft);font-size:0.95rem;line-height:1.75;max-width:680px;margin-bottom:2rem;" class="fade-in">Most companies adopting AI hit the same wall. The pilot works, then it dies before production. Not because the models are weak, but because deploying them means a platform migration nobody wants and an operations layer nobody built. Meanwhile the real cost compounds quietly: skilled people spending their hours on work an agent should carry.</p>
+        <div class="tile-grid">
+          <div class="tile fade-in">
+            <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="20" cy="20" r="14"/><line x1="20" y1="10" x2="20" y2="20"/><line x1="20" y1="20" x2="28" y2="26"/></svg>
+            <div class="tile-title">The deployment gap.</div>
+            <div class="tile-desc">42% of AI initiatives never reach production. The number one barrier is platform migration. Tribune removes it by deploying agents where your team already works.</div>
+          </div>
+          <div class="tile fade-in">
+            <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="8" width="8" height="8" rx="1"/><rect x="24" y="8" width="8" height="8" rx="1"/><rect x="8" y="24" width="8" height="8" rx="1"/><rect x="24" y="24" width="8" height="8" rx="1"/><line x1="16" y1="12" x2="24" y2="12"/><line x1="12" y1="16" x2="12" y2="24"/><line x1="28" y1="16" x2="28" y2="24"/><line x1="16" y1="28" x2="24" y2="28"/></svg>
+            <div class="tile-title">Growth means headcount.</div>
+            <div class="tile-desc">Today, scaling delivery means hiring. Every new account, every new report, every new client adds linear human load. An agentic operations layer breaks that line.</div>
+          </div>
+          <div class="tile fade-in">
+            <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 6l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z"/></svg>
+            <div class="tile-title">The knowledge walks out the door.</div>
+            <div class="tile-desc">When a skilled operator leaves, their judgment leaves with them. A Tribune-built system accumulates that judgment and keeps it.</div>
+          </div>
+        </div>
+        <p style="font-size:0.9rem;color:var(--text-soft);margin-top:1.5rem;font-style:italic;" class="fade-in">This is not a model problem. It is an architecture problem. That is what Tribune builds.</p>
+        <button class="btn btn-link fade-in" @click="openModal('how_built')" style="margin-top:0.5rem;">How Tribune builds it</button>
+      </div>
+    </section>
+
+    <!-- WHAT WE BUILD -->
+    <section id="what-we-build" data-section="2" style="background:var(--bg);" x-data="{ edition: 'standard' }">
+      <div class="container">
+        <p class="section-label fade-in">What Tribune Builds</p>
+        <h2 class="section-headline fade-in">One Builder. Two Editions. Built for How Your Business Is Regulated.</h2>
+        <p style="color:var(--text-soft);font-size:0.95rem;line-height:1.75;max-width:680px;margin-bottom:1.5rem;" class="fade-in">Every Tribune build is a complete agentic back-office. The edition depends on one question: does your operation touch protected data? If it does, we build the Regulated edition. If it does not, we build the Standard edition.</p>
+        <div class="edition-toggle fade-in">
+          <button class="edition-btn" :class="{ active: edition === 'standard' }" @click="edition = 'standard'">Standard</button>
+          <button class="edition-btn" :class="{ active: edition === 'regulated' }" @click="edition = 'regulated'">Regulated</button>
+        </div>
+
+        <!-- STANDARD -->
+        <div x-show="edition === 'standard'">
+          <p class="edition-subhead">Cloud-flexible. Fastest to deploy. Same engineering rigor.</p>
+          <p style="font-size:0.9rem;color:var(--text-soft);line-height:1.7;margin-bottom:1.5rem;max-width:680px;">You have already built the intelligence product. Rohit's agentic framework produces the signals. Tribune builds the operation that delivers them at scale, the layer between a great report and a great report shipped to every account, every day, without growing headcount to match.</p>
+          <div class="tile-grid">
+            <div class="tile fade-in">
+              <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="8" width="32" height="24" rx="2"/><line x1="4" y1="16" x2="36" y2="16"/><line x1="14" y1="8" x2="14" y2="32"/></svg>
+              <div class="tile-title">Report Production Orchestrator</div>
+              <div class="tile-micro">Intake to delivery. Enforced by the system.</div>
+              <div class="tile-desc">Intake to research to signal synthesis to report assembly to QA to delivery, run as an agentic pipeline. The 24-hour promise, enforced by the system, not by overtime.</div>
+            </div>
+            <div class="tile fade-in">
+              <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="20" cy="20" r="12"/><circle cx="20" cy="20" r="4"/><line x1="20" y1="4" x2="20" y2="8"/><line x1="20" y1="32" x2="20" y2="36"/><line x1="4" y1="20" x2="8" y2="20"/><line x1="32" y1="20" x2="36" y2="20"/></svg>
+              <div class="tile-title">Signal Monitoring at Scale</div>
+              <div class="tile-micro">Every account. Continuously.</div>
+              <div class="tile-desc">Every account in every client portfolio watched continuously. Buying signals, leadership changes, budget moves, surfaced the moment they appear, without linear headcount.</div>
+            </div>
+            <div class="tile fade-in">
+              <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 4L6 10v12c0 8 6 14 14 16 8-2 14-8 14-16V10L20 4z"/><polyline points="14 20 18 24 26 16"/></svg>
+              <div class="tile-title">Quality and Consistency Director</div>
+              <div class="tile-micro">Your best analyst. Every output.</div>
+              <div class="tile-desc">Every report meets the 40-year methodology standard, every time. The judgment of your best analyst, encoded and enforced on every output.</div>
+            </div>
+            <div class="tile fade-in">
+              <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="8" width="28" height="26" rx="2"/><line x1="6" y1="16" x2="34" y2="16"/><circle cx="20" cy="26" r="4"/><line x1="20" y1="22" x2="20" y2="26"/><line x1="20" y1="26" x2="23" y2="26"/></svg>
+              <div class="tile-title">Delivery SLA Enforcement</div>
+              <div class="tile-micro">Nothing slips silently.</div>
+              <div class="tile-desc">Every report tracked against its deadline. Nothing slips silently. Leadership sees the whole queue.</div>
+            </div>
+            <div class="tile fade-in">
+              <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 20h6l4-12 4 24 4-12h6"/></svg>
+              <div class="tile-title">Client Onboarding Pipeline</div>
+              <div class="tile-micro">Growth as a system event.</div>
+              <div class="tile-desc">New clients stood up fast and consistently, so growth is a system event, not a fire drill.</div>
+            </div>
+            <div class="tile tile-summary fade-in">
+              <div class="tile-title" style="color:#a0a8ff">The same engine, any back-office.</div>
+              <div class="tile-desc">Sales operations, finance, legal intake, client services. The Standard edition is the reusable core. We tailor it to your operation in Discovery.</div>
+              <button class="btn btn-link" @click="openModal('salesleuth')" style="margin-top:0.75rem;">For SalesSleuth, specifically</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- REGULATED -->
+        <div x-show="edition === 'regulated'">
+          <p class="edition-subhead">Protected data physically partitioned. On-premise. BAA-backed.</p>
+          <div class="tile-grid">
+            <div class="tile fade-in">
+              <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 4L6 10v12c0 8 6 14 14 16 8-2 14-8 14-16V10L20 4z"/><polyline points="14 20 18 24 26 16"/></svg>
+              <div class="tile-title">Denial Intelligence Engine</div>
+              <div class="tile-micro">Classify. Route. Recover.</div>
+              <div class="tile-desc">Every remittance classified by code, denial type determined, routing and appeal packets assembled automatically.</div>
+            </div>
+            <div class="tile fade-in">
+              <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="20" cy="20" r="14"/><polyline points="20 10 20 20 28 24"/></svg>
+              <div class="tile-title">Revenue Cycle Automation</div>
+              <div class="tile-micro">Eligibility. Auth. Submission. Posting.</div>
+              <div class="tile-desc">Eligibility verified before every visit, prior auth submitted and tracked, claims scrubbed, payments auto-posted.</div>
+            </div>
+            <div class="tile fade-in">
+              <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="14" width="12" height="12" rx="2"/><rect x="24" y="14" width="12" height="12" rx="2"/><path d="M16 20h8"/><polyline points="20 17 24 20 20 23"/></svg>
+              <div class="tile-title">Reconciliation Bridge</div>
+              <div class="tile-micro">Daily reconciliation. Zero manual entry.</div>
+              <div class="tile-desc">Summary journal entries only. The sub-ledger ties to the general ledger control account at period close. Zero manual entry.</div>
+            </div>
+            <div class="tile fade-in">
+              <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="4" width="20" height="26" rx="2"/><line x1="12" y1="12" x2="28" y2="12"/><line x1="12" y1="17" x2="28" y2="17"/><path d="M24 28l8 4-8 4v-8z"/></svg>
+              <div class="tile-title">Document Intake and Routing</div>
+              <div class="tile-micro">Auto-classified on arrival.</div>
+              <div class="tile-desc">Inbound fax, referrals, and required documentation auto-classified on arrival and routed to the right queue.</div>
+            </div>
+            <div class="tile fade-in">
+              <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="8" width="28" height="26" rx="2"/><line x1="6" y1="16" x2="34" y2="16"/><circle cx="20" cy="26" r="4"/></svg>
+              <div class="tile-title">Compliance Calendar</div>
+              <div class="tile-micro">90-day pre-warnings.</div>
+              <div class="tile-desc">Credentialing deadlines, license renewals, and certification dates tracked, with 90-day pre-warnings before every deadline.</div>
+            </div>
+            <div class="tile tile-summary fade-in">
+              <span style="font-size:1.2rem;">🔒</span>
+              <div class="tile-title" style="color:#a0a8ff;margin-top:0.5rem;">Protected data never leaves the building.</div>
+              <div class="tile-desc">A local model on on-premise hardware handles classification. A code-enforced wall means protected data physically cannot reach any outside channel. Auditable by architecture, not by a filter that can fail.</div>
+              <button class="btn btn-link" @click="openModal('hipaa')" style="margin-top:0.75rem;">HIPAA by design, not by filter</button>
+            </div>
+          </div>
+          <div class="hipaa-badge fade-in" style="margin-top:1.5rem;">
+            <span class="badge-icon">✓</span>
+            <span><strong>This is live.</strong> Tribune's first build is an orthotics and prosthetics back-office for a real practice. If Tribune can seal protected health data, it can handle anything less regulated with ease.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW TRIBUNE THINKS -->
+    <section id="how-we-think" data-section="3" style="background:var(--bg-soft);">
+      <div class="container">
+        <p class="section-label fade-in">How Tribune Thinks</p>
+        <h2 class="section-headline fade-in">Built Like a Company. Reasoned Like a Senate. Runs on Your Hardware.</h2>
+        <div class="think-grid">
+          <div class="think-card fade-in">
+            <div class="think-card-title">A legible AI company.</div>
+            <div class="think-card-body">The agents are organized the way a business is: a Chief of Staff over Directors over specialized Workers. You see one daily brief, not a queue of micro-decisions. Familiar by design, so you always know who does what.</div>
+            <div class="diagram-wrap">
+              <svg width="240" height="130" viewBox="0 0 240 130">
+                <rect x="60" y="6" width="120" height="30" rx="6" fill="rgba(196,30,58,0.1)" stroke="#c41e3a" stroke-width="1.5"/>
+                <text x="120" y="26" text-anchor="middle" fill="#c41e3a" font-size="11" font-weight="700" font-family="Inter,sans-serif">Chief of Staff</text>
+                <line x1="120" y1="36" x2="120" y2="50" stroke="#ccc" stroke-width="1.5"/>
+                <rect x="10" y="50" width="65" height="26" rx="5" fill="#f4f4fa" stroke="#e0e0e8"/>
+                <text x="42" y="67" text-anchor="middle" fill="#666" font-size="9" font-weight="600" font-family="Inter,sans-serif">Director</text>
+                <rect x="87" y="50" width="66" height="26" rx="5" fill="#f4f4fa" stroke="#e0e0e8"/>
+                <text x="120" y="67" text-anchor="middle" fill="#666" font-size="9" font-weight="600" font-family="Inter,sans-serif">Director</text>
+                <rect x="165" y="50" width="65" height="26" rx="5" fill="#f4f4fa" stroke="#e0e0e8"/>
+                <text x="197" y="67" text-anchor="middle" fill="#666" font-size="9" font-weight="600" font-family="Inter,sans-serif">Director</text>
+                <line x1="42" y1="76" x2="42" y2="90" stroke="#ccc" stroke-width="1"/>
+                <line x1="120" y1="76" x2="120" y2="90" stroke="#ccc" stroke-width="1"/>
+                <line x1="197" y1="76" x2="197" y2="90" stroke="#ccc" stroke-width="1"/>
+                <rect x="4" y="90" width="76" height="22" rx="4" fill="#ebebf5" stroke="#e0e0e8"/>
+                <text x="42" y="105" text-anchor="middle" fill="#999" font-size="8" font-family="Inter,sans-serif">Worker</text>
+                <rect x="82" y="90" width="76" height="22" rx="4" fill="#ebebf5" stroke="#e0e0e8"/>
+                <text x="120" y="105" text-anchor="middle" fill="#999" font-size="8" font-family="Inter,sans-serif">Worker</text>
+                <rect x="160" y="90" width="76" height="22" rx="4" fill="#ebebf5" stroke="#e0e0e8"/>
+                <text x="198" y="105" text-anchor="middle" fill="#999" font-size="8" font-family="Inter,sans-serif">Worker</text>
+              </svg>
+            </div>
+          </div>
+          <div class="think-card fade-in">
+            <div class="think-card-title">The Senate.</div>
+            <div class="think-card-body">Every significant architectural decision is debated by models from four independent providers (Anthropic, OpenAI, Google, and xAI) before it is committed. Different training distributions surface different failure modes. The result is code that has been adversarially stress-tested, not single-model output shipped on faith.</div>
+            <div class="diagram-wrap">
+              <svg width="190" height="190" viewBox="0 0 190 190">
+                <defs><marker id="ar" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#bbb"/></marker></defs>
+                <circle cx="95" cy="95" r="28" fill="rgba(196,30,58,0.1)" stroke="#c41e3a" stroke-width="1.5"/>
+                <text x="95" y="92" text-anchor="middle" fill="#c41e3a" font-size="9" font-weight="700" font-family="Inter,sans-serif">Verdict</text>
+                <circle cx="95" cy="22" r="20" fill="#f4f4fa" stroke="#e0e0e8"/>
+                <text x="95" y="20" text-anchor="middle" fill="#555" font-size="8" font-weight="600" font-family="Inter,sans-serif">Anthropic</text>
+                <line x1="95" y1="42" x2="95" y2="67" stroke="#ddd" stroke-width="1.5" marker-end="url(#ar)"/>
+                <circle cx="168" cy="95" r="20" fill="#f4f4fa" stroke="#e0e0e8"/>
+                <text x="168" y="93" text-anchor="middle" fill="#555" font-size="8" font-weight="600" font-family="Inter,sans-serif">OpenAI</text>
+                <line x1="148" y1="95" x2="123" y2="95" stroke="#ddd" stroke-width="1.5" marker-end="url(#ar)"/>
+                <circle cx="95" cy="168" r="20" fill="#f4f4fa" stroke="#e0e0e8"/>
+                <text x="95" y="166" text-anchor="middle" fill="#555" font-size="8" font-weight="600" font-family="Inter,sans-serif">Google</text>
+                <line x1="95" y1="148" x2="95" y2="123" stroke="#ddd" stroke-width="1.5" marker-end="url(#ar)"/>
+                <circle cx="22" cy="95" r="20" fill="#f4f4fa" stroke="#e0e0e8"/>
+                <text x="22" y="93" text-anchor="middle" fill="#555" font-size="8" font-weight="600" font-family="Inter,sans-serif">xAI</text>
+                <line x1="42" y1="95" x2="67" y2="95" stroke="#ddd" stroke-width="1.5" marker-end="url(#ar)"/>
+              </svg>
+            </div>
+            <button class="btn btn-link" @click="openModal('senate')">How the Senate works</button>
+          </div>
+          <div class="think-card fade-in">
+            <div class="think-card-title">Local-sovereign by default.</div>
+            <div class="think-card-body">Tribune-built systems run on your own hardware. When a global model went dark in mid-2026, cloud-only systems went dark with it. Yours would not have. Sovereignty is not a feature, it is the floor.</div>
+            <div class="diagram-wrap">
+              <svg width="240" height="110" viewBox="0 0 240 110">
+                <defs><marker id="ar2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#c41e3a"/></marker></defs>
+                <rect x="4" y="10" width="104" height="90" rx="8" fill="rgba(196,30,58,0.05)" stroke="#c41e3a" stroke-width="1.5" stroke-dasharray="4 2"/>
+                <text x="56" y="30" text-anchor="middle" fill="#c41e3a" font-size="8" font-weight="700" font-family="Inter,sans-serif">SEALED ZONE</text>
+                <text x="56" y="50" text-anchor="middle" fill="#888" font-size="8" font-family="Inter,sans-serif">Local LLM</text>
+                <text x="56" y="64" text-anchor="middle" fill="#888" font-size="8" font-family="Inter,sans-serif">Protected Data</text>
+                <text x="56" y="82" text-anchor="middle" font-size="12">🔒</text>
+                <rect x="132" y="10" width="104" height="90" rx="8" fill="rgba(44,97,164,0.05)" stroke="#3b82f6" stroke-width="1.5"/>
+                <text x="184" y="30" text-anchor="middle" fill="#2c61a4" font-size="8" font-weight="700" font-family="Inter,sans-serif">OPEN ZONE</text>
+                <text x="184" y="50" text-anchor="middle" fill="#888" font-size="8" font-family="Inter,sans-serif">TRIBUNE</text>
+                <text x="184" y="64" text-anchor="middle" fill="#888" font-size="8" font-family="Inter,sans-serif">Global LLMs</text>
+                <path d="M108 55 L132 55" stroke="#c41e3a" stroke-width="1.5" marker-end="url(#ar2)"/>
+                <text x="120" y="48" text-anchor="middle" fill="#c41e3a" font-size="7" font-family="Inter,sans-serif">PHI-free only</text>
+              </svg>
+            </div>
+            <button class="btn btn-link" @click="openModal('sovereign')">What sovereign deployment means</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE BUILDER -->
+    <section id="builder" data-section="4" style="background:var(--bg);">
+      <div class="container">
+        <p class="section-label fade-in">The Core Idea</p>
+        <h2 class="section-headline fade-in">The Asset Is the Builder.</h2>
+        <p style="color:var(--text-soft);font-size:0.95rem;line-height:1.75;max-width:680px;" class="fade-in">When Tribune finishes a build, the deliverable is yours. But the real event is quieter: Tribune now knows how to build that entire category. The first healthcare back-office makes the second one faster and the tenth one routine. Healthcare teaches legal. Legal teaches finance. Each build compounds into the next. That is why Tribune is not a consultancy that ships and leaves. It is a builder that gets more capable with every system it ships.</p>
+        <div class="diagram-wrap fade-in" style="margin:2rem 0;justify-content:flex-start;">
+          <svg width="500" height="90" viewBox="0 0 500 90">
+            <defs><marker id="bl" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#bbb"/></marker></defs>
+            <rect x="4" y="25" width="90" height="40" rx="8" fill="rgba(196,30,58,0.08)" stroke="#c41e3a" stroke-width="1.5"/>
+            <text x="49" y="50" text-anchor="middle" fill="#c41e3a" font-size="10" font-weight="700" font-family="Inter,sans-serif">Healthcare</text>
+            <path d="M94 45 L114 45" stroke="#bbb" stroke-width="1.5" marker-end="url(#bl)"/>
+            <rect x="114" y="25" width="80" height="40" rx="8" fill="#f4f4fa" stroke="#e0e0e8" stroke-width="1.5"/>
+            <text x="154" y="50" text-anchor="middle" fill="#555" font-size="10" font-weight="600" font-family="Inter,sans-serif">Legal</text>
+            <path d="M194 45 L214 45" stroke="#bbb" stroke-width="1.5" marker-end="url(#bl)"/>
+            <rect x="214" y="25" width="80" height="40" rx="8" fill="#f4f4fa" stroke="#e0e0e8" stroke-width="1.5"/>
+            <text x="254" y="50" text-anchor="middle" fill="#555" font-size="10" font-weight="600" font-family="Inter,sans-serif">Finance</text>
+            <path d="M294 45 L314 45" stroke="#bbb" stroke-width="1.5" marker-end="url(#bl)"/>
+            <rect x="314" y="25" width="110" height="40" rx="8" fill="rgba(44,97,164,0.08)" stroke="#3b82f6" stroke-width="1.5"/>
+            <text x="369" y="50" text-anchor="middle" fill="#2c61a4" font-size="10" font-weight="600" font-family="Inter,sans-serif">Your Vertical</text>
+            <path d="M369 25 Q369 8 240 8 Q111 8 49 25" stroke="#c41e3a" stroke-width="1" stroke-dasharray="4 3" fill="none" marker-end="url(#bl)"/>
+          </svg>
+        </div>
+        <button class="btn btn-link fade-in" @click="openModal('builder')">The builder, not the deliverable</button>
+      </div>
+    </section>
+
+    <!-- PARADOX -->
+    <div class="paradox-section">
+      <div class="container">
+        <p class="section-label" style="color:var(--crimson);">The Paradox</p>
+        <p class="paradox-quote">"Our greatest success is the day we can unplug Tribune from your system, because your new AI team runs on its own."</p>
+        <p class="paradox-sub">We do not create dependency. We create independence. That is the product, and it is the moat no platform vendor can replicate.</p>
+      </div>
+    </div>
+
+    <!-- THE MATH -->
+    <section id="the-math" data-section="5" style="background:var(--bg-soft);">
+      <div class="container">
+        <p class="section-label fade-in">The Math</p>
+        <h2 class="section-headline fade-in">The Value Is Bottom-Up. Then It Multiplies.</h2>
+        <table class="roi-table fade-in">
+          <thead><tr><th></th><th>Value</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:600;color:var(--text)">One small practice, one back-office build</td>
+              <td>$165,000+ net Year 1</td>
+              <td>Before denial recovery is counted. Replacing the load of three or more staff.</td>
+            </tr>
+            <tr class="highlight">
+              <td>For a delivery business like a sales-intelligence firm</td>
+              <td>Output scales, headcount does not</td>
+              <td>The cost line that used to climb with every new account flattens.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="math-prose fade-in">That is one small practice. There are thousands of practices in a single specialty, and hundreds of thousands of medical practices in total. Each one is a back-office Tribune can build once and template. And healthcare is one vertical. Legal is already wired (live case-law retrieval is built and integrated). Finance is next. The value is not an abstract market number. It is real money saved per business, multiplied by the number of businesses, multiplied by the number of verticals.</p>
+        <p class="math-context fade-in">For scale, the AI consulting market alone is roughly $18.6B today and is projected past $144B by 2034. Tribune is built to serve the part of it that the large firms price out of reach.</p>
+      </div>
+    </section>
+
+    <!-- ENGAGEMENT -->
+    <section id="engagement" data-section="6" style="background:var(--bg);">
+      <div class="container">
+        <p class="section-label fade-in">How It Works</p>
+        <h2 class="section-headline fade-in">Five Phases. One Discovery to Start.</h2>
+        <div class="timeline fade-in">
+          <div class="timeline-item"><div class="timeline-number">1</div><div class="timeline-content"><div class="timeline-title">Discovery</div><div class="timeline-desc">We map your operation, your friction, and your highest-value bottlenecks. A structured diagnostic across seven domains. Discovery deposit to start.</div></div></div>
+          <div class="timeline-item"><div class="timeline-number">2</div><div class="timeline-content"><div class="timeline-title">Architecture</div><div class="timeline-desc">We design the agent system: roles, knowledge base, decision logic, communication protocols. Every significant decision passes through the Senate.</div></div></div>
+          <div class="timeline-item"><div class="timeline-number">3</div><div class="timeline-content"><div class="timeline-title">Build</div><div class="timeline-desc">We deploy the agents inside the tools you already use. They learn your business, your language, your clients.</div></div></div>
+          <div class="timeline-item"><div class="timeline-number">4</div><div class="timeline-content"><div class="timeline-title">Train</div><div class="timeline-desc">The agents run alongside your team. We tune, test, and harden until the work meets your standard.</div></div></div>
+          <div class="timeline-item"><div class="timeline-number">5</div><div class="timeline-content"><div class="timeline-title">Handoff</div><div class="timeline-desc">Full documentation. The Independence Test. You own it completely.</div></div></div>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-dim);margin-top:1rem;" class="fade-in">Typical engagement, 6 to 10 weeks. Discovery deposit credited at signing.</p>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section style="background:var(--bg-soft);">
+      <div class="container">
+        <p class="section-label fade-in">Engagement Tiers</p>
+        <h2 class="section-headline fade-in">One Discovery. One Build. Compounding Return.</h2>
+        <div class="pricing-grid">
+          <div class="pricing-card featured fade-in">
+            <div class="pricing-tier">Discovery</div>
+            <div class="pricing-price">$5,000</div>
+            <div class="pricing-desc">A structured diagnostic across seven domains. Delivers your architecture priorities, agent roadmap, and deployment plan. Credited against your build.</div>
+            <button class="btn btn-crimson" @click="tab='script'; window.scrollTo({top:0,behavior:'smooth'})">Begin Discovery</button>
+          </div>
+          <div class="pricing-card fade-in">
+            <div class="pricing-tier">Full Build</div>
+            <div class="pricing-price">$25k–$75k</div>
+            <div class="pricing-desc">Three to eight custom agents deployed on your existing infrastructure. The complete five-phase delivery, including the Independence Test. Four to eight weeks.</div>
+            <div class="pricing-note">Discovery deposit credited at signing.</div>
+          </div>
+          <div class="pricing-card fade-in">
+            <div class="pricing-tier">Retainer</div>
+            <div class="pricing-price">$3k–$8k<span>/mo</span></div>
+            <div class="pricing-desc">Optional ongoing evolution, expansion, and support. The system keeps learning your operation.</div>
+          </div>
+          <div class="pricing-card fade-in">
+            <div class="pricing-tier">Channel Partner</div>
+            <div class="pricing-price">20–25%</div>
+            <div class="pricing-desc">For partners who bring Tribune to the businesses in their network. A new revenue line for solving a real problem for your clients.</div>
+            <div class="pricing-note">of deal value</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE PROOF -->
+    <section style="background:var(--bg);">
+      <div class="container">
+        <p class="section-label fade-in">The Proof</p>
+        <h2 class="section-headline fade-in">We Built Tribune Because It Worked for Us First.</h2>
+        <p style="color:var(--text-soft);font-size:0.95rem;line-height:1.75;max-width:680px;" class="fade-in">Tribune is not a concept on a slide. MaxximusAI runs as a live agentic organization: a full AI C-suite operating in Discord, a Senate deliberating across four model providers, all orchestrated on OpenClaw. The methodology you are reading about is the methodology we run our own company on, every day.</p>
+        <div class="proof-chips fade-in">
+          <span class="proof-chip">AI C-suite operating in Discord</span>
+          <span class="proof-chip">The Senate, four providers, adversarial review</span>
+          <span class="proof-chip">OpenClaw orchestration</span>
+          <span class="proof-chip">First paying build in production (orthotics and prosthetics)</span>
+          <span class="proof-chip">Second build scoped (your Standard edition)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="team" data-section="7" style="background:var(--bg-soft);">
+      <div class="container">
+        <p class="section-label fade-in">The Team</p>
+        <h2 class="section-headline fade-in">Ryan Poole and Jeffrey R. Reinhold</h2>
+        <div class="team-grid">
+          <div class="team-card fade-in">
+            <div class="team-headshot" @click="openPhoto('https://res.cloudinary.com/dthdxjmgb/image/upload/v1780947015/don-dixon/ryan-poole-headshot.jpg')">
+              <img src="https://res.cloudinary.com/dthdxjmgb/image/upload/v1780947015/don-dixon/ryan-poole-headshot.jpg" alt="Ryan Poole" style="width:100%;height:100%;object-fit:cover;object-position:center top;" />
+            </div>
+            <div>
+              <div class="team-name">Ryan Poole</div>
+              <div class="team-role">Co-Founder</div>
+              <a href="https://www.linkedin.com/in/ryan-poole-0b50b9162/" target="_blank" rel="noopener" class="team-linkedin">LinkedIn</a>
+              <div class="team-bio">AI architect and Agentic AI systems designer with a founder track record and 27 years of sales and behavioral intelligence. Builds and orchestrates multi-agent AI systems in production, including a live AI C-suite of eight specialized agents running a platform from the ground up. Brings behavioral precision, board-level strategic thinking, and real operational deployments to every system he engineers.</div>
+            </div>
+          </div>
+          <div class="team-card fade-in">
+            <div class="team-headshot" @click="openPhoto('https://res.cloudinary.com/dthdxjmgb/image/upload/v1780947015/don-dixon/jeff-reinhold-headshot.png')">
+              <img src="https://res.cloudinary.com/dthdxjmgb/image/upload/v1780947015/don-dixon/jeff-reinhold-headshot.png" alt="Jeffrey R. Reinhold" style="width:100%;height:100%;object-fit:cover;object-position:center top;" />
+            </div>
+            <div>
+              <div class="team-name">Jeffrey R. Reinhold</div>
+              <div class="team-role">Co-Founder</div>
+              <a href="https://www.linkedin.com/in/jeffrey-reinhold/" target="_blank" rel="noopener" class="team-linkedin">LinkedIn</a>
+              <div class="team-bio">AI Systems Architect specializing in Agentic AI, with an engineering background and a decade of shipping production systems across logistics, platforms, and AI-driven automation. Designs and deploys end-to-end autonomous workflows built to run at scale without manual intervention, from data pipelines and multi-channel publishing to prototype development in law, healthcare and financial operations.</div>
+            </div>
+          </div>
+        </div>
+        <p class="section-label fade-in" style="margin-top:2.5rem;">The Live AI Organization</p>
+        <div class="ai-org-grid fade-in">
+          <div class="ai-org-card"><div class="ai-org-name">Marcus</div><div class="ai-org-role">AI Chief Executive</div><div class="ai-org-desc">Day-to-day operations and market strategy.</div></div>
+          <div class="ai-org-card"><div class="ai-org-name">HAL</div><div class="ai-org-role">AI Consul</div><div class="ai-org-desc">Orchestrates the build hierarchy and the Senate.</div></div>
+          <div class="ai-org-card"><div class="ai-org-name">ZUZE</div><div class="ai-org-role">AI Strategist</div><div class="ai-org-desc">Deep architecture and adversarial review.</div></div>
+          <div class="ai-org-card"><div class="ai-org-name">Mercury</div><div class="ai-org-role">AI CFO</div><div class="ai-org-desc">Unit economics and financial discipline.</div></div>
+        </div>
+        <div class="contact-row fade-in">
+          <div>
+            <div style="font-size:0.78rem;color:var(--text-dim);margin-bottom:0.25rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">Contact</div>
+            <div style="display:flex;flex-direction:column;gap:0.25rem;">
+              <a href="mailto:ryan@maxximus.ai" style="font-size:1rem;font-weight:600;color:var(--text);">ryan@maxximus.ai</a>
+              <a href="mailto:jeffreyreinhold@gmail.com" style="font-size:1rem;font-weight:600;color:var(--text);">jeffreyreinhold@gmail.com</a>
+            </div>
+          </div>
+          <div class="confidentiality-note">
+            This proposal is confidential and prepared exclusively for MK Marsden.<br/>
+            Do not distribute. Tribune is a joint venture of MaxximusAI, Inc. and Jeff Reinhold.<br/>
+            © 2026 Ryan Poole and Jeffrey R. Reinhold
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /proposal -->
+
+  <!-- ══════════ BLUEPRINT TAB ══════════ -->
+  <div x-show="tab === 'blueprint'" x-cloak>
+    <!-- BLUEPRINT_CONTENT_START -->
+    <!-- BLUEPRINT_CONTENT_END -->
+    <div class="blueprint-placeholder" id="blueprint-placeholder">
+      <div class="blueprint-placeholder-inner">
+        <p class="section-label" style="color:var(--crimson);margin-bottom:1.5rem;">Your Blueprint</p>
+        <div class="blueprint-shimmer-line"></div>
+        <p class="blueprint-placeholder-sub">Your Blueprint will appear here once Discovery is complete.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ DISCOVERY TAB ══════════ -->
+  <div x-show="tab === 'script'" x-cloak x-data="scriptApp()" style="padding-top:5rem;">
+    <div class="container script-section">
+      <div class="script-header">
+        <p class="section-label">Discovery</p>
+        <h1 style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;margin-bottom:0.75rem;">Understanding Your Operation</h1>
+        <p style="font-size:1rem;color:var(--text-soft);max-width:640px;line-height:1.7;">To design the right system, we need to understand how your operation works today. These questions confirm the architecture and scope the build correctly before either side commits.</p>
+      </div>
+
+      <!-- D1: Your Operation -->
+      <div class="discovery-block">
+        <h2 class="discovery-heading">Your Operation</h2>
+        <p class="discovery-intro">How work moves from intake to finished output today, and where your team still carries the most weight.</p>
+        <div class="question-card">
+          <div class="question-number">Q1</div>
+          <div class="question-text">How does work move from intake to finished output today? Walk us through the typical path.</div>
+          <div class="question-why"><strong>Why we ask</strong>This locates the highest-value automation target.</div>
+          <div class="intake-field"><textarea class="notes-input" placeholder="Describe your current workflow..." x-model="answers.q_op_flow" rows="3"></textarea></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_op_flow_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_op_flow ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_op_flow||qSubmitted.q_op_flow" @click="submitQ('q_op_flow','q_op_flow_notes','Your Operation')"><span x-text="qSending.q_op_flow?'Saving...':qSubmitted.q_op_flow?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_op_flow" class="q-edit-btn" @click="qSubmitted.q_op_flow=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q2</div>
+          <div class="question-text">Where does your team spend the most manual hours per week?</div>
+          <div class="question-why"><strong>Why we ask</strong>This sets the priority order for which agents we build first.</div>
+          <div class="intake-field"><input type="text" class="intake-input" placeholder="e.g. report formatting, client updates, QA review..." x-model="answers.q_op_manual" /></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_op_manual_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_op_manual ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_op_manual||qSubmitted.q_op_manual" @click="submitQ('q_op_manual','q_op_manual_notes','Your Operation')"><span x-text="qSending.q_op_manual?'Saving...':qSubmitted.q_op_manual?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_op_manual" class="q-edit-btn" @click="qSubmitted.q_op_manual=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q3</div>
+          <div class="question-text">What is the highest-value bottleneck you wish you could remove tomorrow?</div>
+          <div class="question-why"><strong>Why we ask</strong>This tells us what to prioritize in the Architecture phase.</div>
+          <div class="intake-field"><input type="text" class="intake-input" placeholder="Your single biggest friction point..." x-model="answers.q_op_bottleneck" /></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_op_bottleneck_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_op_bottleneck ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_op_bottleneck||qSubmitted.q_op_bottleneck" @click="submitQ('q_op_bottleneck','q_op_bottleneck_notes','Your Operation')"><span x-text="qSending.q_op_bottleneck?'Saving...':qSubmitted.q_op_bottleneck?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_op_bottleneck" class="q-edit-btn" @click="qSubmitted.q_op_bottleneck=false">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D2: AI Maturity -->
+      <div class="discovery-block">
+        <h2 class="discovery-heading">Your AI Maturity</h2>
+        <p class="discovery-intro">What is deployed and running versus experimental. What Rohit's framework covers today.</p>
+        <div class="question-card">
+          <div class="question-number">Q4</div>
+          <div class="question-text">What AI tools or systems are currently deployed and running in production?</div>
+          <div class="question-why"><strong>Why we ask</strong>We build to complement what exists, never to duplicate it.</div>
+          <div class="intake-field"><textarea class="notes-input" placeholder="List any AI tools currently in production..." x-model="answers.q_ai_prod" rows="3"></textarea></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_ai_prod_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_ai_prod ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_ai_prod||qSubmitted.q_ai_prod" @click="submitQ('q_ai_prod','q_ai_prod_notes','AI Maturity')"><span x-text="qSending.q_ai_prod?'Saving...':qSubmitted.q_ai_prod?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_ai_prod" class="q-edit-btn" @click="qSubmitted.q_ai_prod=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q5</div>
+          <div class="question-text">What does Rohit's agentic framework cover today, and what sits outside it?</div>
+          <div class="question-why"><strong>Why we ask</strong>Tribune builds the operations layer around the intelligence layer, not on top of it.</div>
+          <div class="intake-field"><textarea class="notes-input" placeholder="Describe Rohit's framework scope..." x-model="answers.q_ai_rohit" rows="3"></textarea></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_ai_rohit_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_ai_rohit ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_ai_rohit||qSubmitted.q_ai_rohit" @click="submitQ('q_ai_rohit','q_ai_rohit_notes','AI Maturity')"><span x-text="qSending.q_ai_rohit?'Saving...':qSubmitted.q_ai_rohit?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_ai_rohit" class="q-edit-btn" @click="qSubmitted.q_ai_rohit=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q6</div>
+          <div class="question-text">Have you attempted to automate any back-office workflows before? What happened?</div>
+          <div class="question-why"><strong>Why we ask</strong>Previous attempts surface the constraints and failure modes we need to design around.</div>
+          <div class="intake-field">
+            <div class="radio-group">
+              <div class="radio-option"><input type="radio" id="qam1" name="q_ai_prev" value="yes_worked" x-model="answers.q_ai_prev"/><label for="qam1">Yes, it worked</label></div>
+              <div class="radio-option"><input type="radio" id="qam2" name="q_ai_prev" value="yes_failed" x-model="answers.q_ai_prev"/><label for="qam2">Yes, it did not stick</label></div>
+              <div class="radio-option"><input type="radio" id="qam3" name="q_ai_prev" value="no" x-model="answers.q_ai_prev"/><label for="qam3">No</label></div>
+            </div>
+          </div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="What happened, and why?" x-model="answers.q_ai_prev_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_ai_prev ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_ai_prev||qSubmitted.q_ai_prev" @click="submitQ('q_ai_prev','q_ai_prev_notes','AI Maturity')"><span x-text="qSending.q_ai_prev?'Saving...':qSubmitted.q_ai_prev?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_ai_prev" class="q-edit-btn" @click="qSubmitted.q_ai_prev=false">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D3: Delivery Bottleneck -->
+      <div class="discovery-block">
+        <h2 class="discovery-heading">The Delivery Bottleneck</h2>
+        <p class="discovery-intro">What scales with headcount right now, and where growth currently means hiring.</p>
+        <div class="question-card">
+          <div class="question-number">Q7</div>
+          <div class="question-text">Which part of your delivery process scales linearly with headcount today?</div>
+          <div class="question-why"><strong>Why we ask</strong>This is where an agentic operations layer pays for itself first.</div>
+          <div class="intake-field"><input type="text" class="intake-input" placeholder="e.g. report production, monitoring, QA..." x-model="answers.q_del_linear" /></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_del_linear_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_del_linear ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_del_linear||qSubmitted.q_del_linear" @click="submitQ('q_del_linear','q_del_linear_notes','Delivery Bottleneck')"><span x-text="qSending.q_del_linear?'Saving...':qSubmitted.q_del_linear?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_del_linear" class="q-edit-btn" @click="qSubmitted.q_del_linear=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q8</div>
+          <div class="question-text">What is the single step that most often causes a report or deliverable to be late?</div>
+          <div class="question-why"><strong>Why we ask</strong>The Delivery SLA Enforcement agent targets exactly this step.</div>
+          <div class="intake-field"><input type="text" class="intake-input" placeholder="The most common delay point..." x-model="answers.q_del_late" /></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_del_late_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_del_late ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_del_late||qSubmitted.q_del_late" @click="submitQ('q_del_late','q_del_late_notes','Delivery Bottleneck')"><span x-text="qSending.q_del_late?'Saving...':qSubmitted.q_del_late?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_del_late" class="q-edit-btn" @click="qSubmitted.q_del_late=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q9</div>
+          <div class="question-text">If you doubled your client base tomorrow, where would the system break first?</div>
+          <div class="question-why"><strong>Why we ask</strong>This tells us where to build the most durable capacity first.</div>
+          <div class="intake-field"><input type="text" class="intake-input" placeholder="Your biggest scale constraint..." x-model="answers.q_del_scale" /></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_del_scale_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_del_scale ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_del_scale||qSubmitted.q_del_scale" @click="submitQ('q_del_scale','q_del_scale_notes','Delivery Bottleneck')"><span x-text="qSending.q_del_scale?'Saving...':qSubmitted.q_del_scale?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_del_scale" class="q-edit-btn" @click="qSubmitted.q_del_scale=false">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D4: Stack and Tools -->
+      <div class="discovery-block">
+        <h2 class="discovery-heading">Your Stack and Tools</h2>
+        <p class="discovery-intro">Where your team works, your CRM, and your data sources. Tribune deploys where you already are.</p>
+        <div class="question-card">
+          <div class="question-number">Q10</div>
+          <div class="question-text">Where does your team communicate and coordinate day-to-day?</div>
+          <div class="question-why"><strong>Why we ask</strong>We deploy where you already are, so there is no migration.</div>
+          <div class="intake-field">
+            <div class="radio-group">
+              <div class="radio-option"><input type="radio" id="qst1" name="q_stack_comms" value="slack" x-model="answers.q_stack_comms"/><label for="qst1">Slack</label></div>
+              <div class="radio-option"><input type="radio" id="qst2" name="q_stack_comms" value="teams" x-model="answers.q_stack_comms"/><label for="qst2">Teams</label></div>
+              <div class="radio-option"><input type="radio" id="qst3" name="q_stack_comms" value="discord" x-model="answers.q_stack_comms"/><label for="qst3">Discord</label></div>
+              <div class="radio-option"><input type="radio" id="qst4" name="q_stack_comms" value="email" x-model="answers.q_stack_comms"/><label for="qst4">Email primarily</label></div>
+            </div>
+          </div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_stack_comms_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_stack_comms ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_stack_comms||qSubmitted.q_stack_comms" @click="submitQ('q_stack_comms','q_stack_comms_notes','Stack and Tools')"><span x-text="qSending.q_stack_comms?'Saving...':qSubmitted.q_stack_comms?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_stack_comms" class="q-edit-btn" @click="qSubmitted.q_stack_comms=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q11</div>
+          <div class="question-text">What CRM and data sources does your sales-intelligence pipeline pull from?</div>
+          <div class="question-why"><strong>Why we ask</strong>Signal monitoring at scale requires knowing your data topology.</div>
+          <div class="intake-field"><textarea class="notes-input" placeholder="CRM, data providers, research sources..." x-model="answers.q_stack_data" rows="3"></textarea></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_stack_data_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_stack_data ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_stack_data||qSubmitted.q_stack_data" @click="submitQ('q_stack_data','q_stack_data_notes','Stack and Tools')"><span x-text="qSending.q_stack_data?'Saving...':qSubmitted.q_stack_data?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_stack_data" class="q-edit-btn" @click="qSubmitted.q_stack_data=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q12</div>
+          <div class="question-text">Are there any tools your team would not give up under any circumstances?</div>
+          <div class="question-why"><strong>Why we ask</strong>We design around your non-negotiables, not in spite of them.</div>
+          <div class="intake-field"><input type="text" class="intake-input" placeholder="Tools that are untouchable..." x-model="answers.q_stack_nonneg" /></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_stack_nonneg_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_stack_nonneg ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_stack_nonneg||qSubmitted.q_stack_nonneg" @click="submitQ('q_stack_nonneg','q_stack_nonneg_notes','Stack and Tools')"><span x-text="qSending.q_stack_nonneg?'Saving...':qSubmitted.q_stack_nonneg?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_stack_nonneg" class="q-edit-btn" @click="qSubmitted.q_stack_nonneg=false">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D5: Data and Compliance -->
+      <div class="discovery-block">
+        <h2 class="discovery-heading">Data and Compliance Posture</h2>
+        <p class="discovery-intro">Whether your operation touches protected or regulated data. This single question decides Regulated edition versus Standard edition.</p>
+        <div class="question-card">
+          <div class="question-number">Q13</div>
+          <div class="question-text">Does your operation touch any protected, regulated, or confidential client data?</div>
+          <div class="question-why"><strong>Why we ask</strong>This is the single question that decides Regulated edition versus Standard edition.</div>
+          <div class="intake-field">
+            <div class="radio-group">
+              <div class="radio-option"><input type="radio" id="qdc1" name="q_data_prot" value="yes" x-model="answers.q_data_prot"/><label for="qdc1">Yes</label></div>
+              <div class="radio-option"><input type="radio" id="qdc2" name="q_data_prot" value="no" x-model="answers.q_data_prot"/><label for="qdc2">No</label></div>
+              <div class="radio-option"><input type="radio" id="qdc3" name="q_data_prot" value="some" x-model="answers.q_data_prot"/><label for="qdc3">Some workflows do, some do not</label></div>
+            </div>
+          </div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_data_prot_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_data_prot ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_data_prot||qSubmitted.q_data_prot" @click="submitQ('q_data_prot','q_data_prot_notes','Data and Compliance')"><span x-text="qSending.q_data_prot?'Saving...':qSubmitted.q_data_prot?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_data_prot" class="q-edit-btn" @click="qSubmitted.q_data_prot=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q14</div>
+          <div class="question-text">What compliance frameworks govern how you handle it (HIPAA, SOC 2, GDPR, other)?</div>
+          <div class="question-why"><strong>Why we ask</strong>Each framework has different structural requirements that shape the architecture.</div>
+          <div class="intake-field">
+            <div class="radio-group">
+              <div class="radio-option"><input type="radio" id="qcf1" name="q_comp_fw" value="hipaa" x-model="answers.q_comp_fw"/><label for="qcf1">HIPAA</label></div>
+              <div class="radio-option"><input type="radio" id="qcf2" name="q_comp_fw" value="soc2" x-model="answers.q_comp_fw"/><label for="qcf2">SOC 2</label></div>
+              <div class="radio-option"><input type="radio" id="qcf3" name="q_comp_fw" value="gdpr" x-model="answers.q_comp_fw"/><label for="qcf3">GDPR</label></div>
+              <div class="radio-option"><input type="radio" id="qcf4" name="q_comp_fw" value="none" x-model="answers.q_comp_fw"/><label for="qcf4">None that apply</label></div>
+            </div>
+          </div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_comp_fw_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_comp_fw ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_comp_fw||qSubmitted.q_comp_fw" @click="submitQ('q_comp_fw','q_comp_fw_notes','Data and Compliance')"><span x-text="qSending.q_comp_fw?'Saving...':qSubmitted.q_comp_fw?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_comp_fw" class="q-edit-btn" @click="qSubmitted.q_comp_fw=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q15</div>
+          <div class="question-text">How is sensitive data currently stored, accessed, and transmitted?</div>
+          <div class="question-why"><strong>Why we ask</strong>This tells us what the architecture needs to preserve or improve.</div>
+          <div class="intake-field"><textarea class="notes-input" placeholder="Current data handling approach..." x-model="answers.q_data_handling" rows="3"></textarea></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_data_handling_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_data_handling ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_data_handling||qSubmitted.q_data_handling" @click="submitQ('q_data_handling','q_data_handling_notes','Data and Compliance')"><span x-text="qSending.q_data_handling?'Saving...':qSubmitted.q_data_handling?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_data_handling" class="q-edit-btn" @click="qSubmitted.q_data_handling=false">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D6: Handoff Vision -->
+      <div class="discovery-block">
+        <h2 class="discovery-heading">The Handoff Vision</h2>
+        <p class="discovery-intro">What success looks like 12 months after we unplug, and who owns it.</p>
+        <div class="question-card">
+          <div class="question-number">Q16</div>
+          <div class="question-text">What does success look like 12 months after we unplug?</div>
+          <div class="question-why"><strong>Why we ask</strong>The Independence Test is designed around your answer.</div>
+          <div class="intake-field"><textarea class="notes-input" placeholder="Describe the ideal state 12 months post-handoff..." x-model="answers.q_ho_vision" rows="3"></textarea></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_ho_vision_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_ho_vision ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_ho_vision||qSubmitted.q_ho_vision" @click="submitQ('q_ho_vision','q_ho_vision_notes','Handoff Vision')"><span x-text="qSending.q_ho_vision?'Saving...':qSubmitted.q_ho_vision?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_ho_vision" class="q-edit-btn" @click="qSubmitted.q_ho_vision=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q17</div>
+          <div class="question-text">Who on your team will own and run the system after handoff?</div>
+          <div class="question-why"><strong>Why we ask</strong>Training and documentation are designed around the person who will own it.</div>
+          <div class="intake-field"><input type="text" class="intake-input" placeholder="Name or role of the system owner..." x-model="answers.q_ho_owner" /></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_ho_owner_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_ho_owner ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_ho_owner||qSubmitted.q_ho_owner" @click="submitQ('q_ho_owner','q_ho_owner_notes','Handoff Vision')"><span x-text="qSending.q_ho_owner?'Saving...':qSubmitted.q_ho_owner?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_ho_owner" class="q-edit-btn" @click="qSubmitted.q_ho_owner=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q18</div>
+          <div class="question-text">What would need to be true for you to feel fully independent from Tribune?</div>
+          <div class="question-why"><strong>Why we ask</strong>Independence is the product. We design the handoff criteria around this answer.</div>
+          <div class="intake-field"><textarea class="notes-input" placeholder="Your independence criteria..." x-model="answers.q_ho_indep" rows="3"></textarea></div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_ho_indep_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_ho_indep ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_ho_indep||qSubmitted.q_ho_indep" @click="submitQ('q_ho_indep','q_ho_indep_notes','Handoff Vision')"><span x-text="qSending.q_ho_indep?'Saving...':qSubmitted.q_ho_indep?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_ho_indep" class="q-edit-btn" @click="qSubmitted.q_ho_indep=false">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D7: Timeline and Decision -->
+      <div class="discovery-block">
+        <h2 class="discovery-heading">Timeline and Decision</h2>
+        <p class="discovery-intro">Your timeline, who is involved, and whether budget is in place.</p>
+        <div class="question-card">
+          <div class="question-number">Q19</div>
+          <div class="question-text">What is your target timeline for having this operational?</div>
+          <div class="question-why"><strong>Why we ask</strong>A Q3 target shapes the engagement sequence differently than an open-ended evaluation.</div>
+          <div class="intake-field">
+            <div class="radio-group">
+              <div class="radio-option"><input type="radio" id="qtl1" name="q_timeline" value="q3_2026" x-model="answers.q_timeline"/><label for="qtl1">Q3 2026</label></div>
+              <div class="radio-option"><input type="radio" id="qtl2" name="q_timeline" value="q4_2026" x-model="answers.q_timeline"/><label for="qtl2">Q4 2026</label></div>
+              <div class="radio-option"><input type="radio" id="qtl3" name="q_timeline" value="2027" x-model="answers.q_timeline"/><label for="qtl3">2027</label></div>
+              <div class="radio-option"><input type="radio" id="qtl4" name="q_timeline" value="evaluating" x-model="answers.q_timeline"/><label for="qtl4">Still evaluating</label></div>
+            </div>
+          </div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_timeline_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_timeline ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_timeline||qSubmitted.q_timeline" @click="submitQ('q_timeline','q_timeline_notes','Timeline and Decision')"><span x-text="qSending.q_timeline?'Saving...':qSubmitted.q_timeline?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_timeline" class="q-edit-btn" @click="qSubmitted.q_timeline=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q20</div>
+          <div class="question-text">Who else is involved in the decision?</div>
+          <div class="question-why"><strong>Why we ask</strong>We want the right people in the room from the beginning.</div>
+          <div class="intake-field">
+            <div class="radio-group">
+              <div class="radio-option"><input type="radio" id="qdec1" name="q_decision" value="mine" x-model="answers.q_decision"/><label for="qdec1">My decision alone</label></div>
+              <div class="radio-option"><input type="radio" id="qdec2" name="q_decision" value="partner" x-model="answers.q_decision"/><label for="qdec2">Business partner</label></div>
+              <div class="radio-option"><input type="radio" id="qdec3" name="q_decision" value="board" x-model="answers.q_decision"/><label for="qdec3">Board or investor approval</label></div>
+              <div class="radio-option"><input type="radio" id="qdec4" name="q_decision" value="other" x-model="answers.q_decision"/><label for="qdec4">Other</label></div>
+            </div>
+          </div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_decision_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_decision ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_decision||qSubmitted.q_decision" @click="submitQ('q_decision','q_decision_notes','Timeline and Decision')"><span x-text="qSending.q_decision?'Saving...':qSubmitted.q_decision?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_decision" class="q-edit-btn" @click="qSubmitted.q_decision=false">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="question-number">Q21</div>
+          <div class="question-text">Is budget allocated, or does this need to go through an approval process?</div>
+          <div class="question-why"><strong>Why we ask</strong>So we sequence the engagement at the right pace from day one.</div>
+          <div class="intake-field">
+            <div class="radio-group">
+              <div class="radio-option"><input type="radio" id="qbg1" name="q_budget" value="approved" x-model="answers.q_budget"/><label for="qbg1">Budget is allocated</label></div>
+              <div class="radio-option"><input type="radio" id="qbg2" name="q_budget" value="needs_approval" x-model="answers.q_budget"/><label for="qbg2">Needs approval</label></div>
+              <div class="radio-option"><input type="radio" id="qbg3" name="q_budget" value="assessing" x-model="answers.q_budget"/><label for="qbg3">Still assessing</label></div>
+            </div>
+          </div>
+          <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_budget_notes" rows="2"></textarea>
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_budget ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_budget||qSubmitted.q_budget" @click="submitQ('q_budget','q_budget_notes','Timeline and Decision')"><span x-text="qSending.q_budget?'Saving...':qSubmitted.q_budget?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_budget" class="q-edit-btn" @click="qSubmitted.q_budget=false">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Session Notes -->
+      <div class="discovery-block">
+        <h2 class="discovery-heading">Session Notes</h2>
+        <p class="discovery-intro">Internal capture during the meeting. No format required.</p>
+        <div class="question-card">
+          <div class="question-number">Session Notes</div>
+          <div class="question-text">Anything said, revealed, or decided that does not fit the structured questions above.</div>
+          <div class="intake-field"><textarea class="notes-input" placeholder="Free-form session notes..." x-model="answers.q_session_notes" rows="6"></textarea></div>
+          <div class="notes-field">
+            <div class="q-submit-row">
+              <button class="btn q-submit-btn" :class="qSubmitted.q_session_notes ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_session_notes||qSubmitted.q_session_notes" @click="submitQ('q_session_notes',null,'Session Notes')"><span x-text="qSending.q_session_notes?'Saving...':qSubmitted.q_session_notes?'Saved \u2713':'Save'"></span></button>
+              <button x-show="qSubmitted.q_session_notes" class="q-edit-btn" @click="qSubmitted.q_session_notes=false">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit All -->
+      <div class="submit-all-row">
+        <button class="btn btn-crimson" @click="submitAll()" :disabled="submitted" style="font-size:1rem;padding:0.9rem 2.5rem;">
+          <span x-text="submitted ? 'Submitted' : 'Submit Discovery Notes'"></span>
+        </button>
+        <span x-show="submitted" class="section-saved">All notes submitted.</span>
+      </div>
+    </div>
+  </div><!-- /discovery -->
+
+  <!-- FOOTER -->
+  <footer>
+    <p>This proposal is confidential and prepared exclusively for MK Marsden. Do not distribute.</p>
+    <p style="margin-top:0.4rem;">Tribune is a joint venture of MaxximusAI, Inc. and Jeff Reinhold.</p>
+    <p style="margin-top:0.4rem;"><a href="mailto:ryan@maxximus.ai">ryan@maxximus.ai</a> · <a href="mailto:jeffreyreinhold@gmail.com">jeffreyreinhold@gmail.com</a></p>
+    <p style="margin-top:0.4rem;">© 2026 Ryan Poole and Jeffrey R. Reinhold</p>
+  </footer>
+
+  <!-- MODALS -->
+  <div class="modal-overlay" x-show="modal === 'senate'" x-transition @click.self="modal = null">
+    <div class="modal-card"><button class="modal-close" @click="modal = null">&#x2715;</button>
+      <div class="modal-title">How the Senate Works</div>
+      <div class="modal-body">
+        <p>An Architect proposes. A Skeptic from a different provider attacks. An Adversary from a third stress-tests. A Synthesizer resolves. An Arbiter scores.</p>
+        <p>Four independent training distributions mean a blind spot in one is caught by another. This runs before significant build decisions are committed. The output is not consensus, it is a decision that survived being attacked from four directions.</p>
+        <h4>Why four providers</h4>
+        <p>Every major model family has characteristic blind spots shaped by its training data. A decision that passes Anthropic, OpenAI, Google, and xAI adversarial review is structurally harder to get wrong than one reviewed by a single model, no matter how capable.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" x-show="modal === 'sovereign'" x-transition @click.self="modal = null">
+    <div class="modal-card"><button class="modal-close" @click="modal = null">&#x2715;</button>
+      <div class="modal-title">What Sovereign Deployment Means</div>
+      <div class="modal-body">
+        <p>Systems run on your hardware. Routine work is handled by a local model on-premise. Only structurally safe, de-identified abstractions ever reach a global model.</p>
+        <p>In the Regulated edition, protected data physically cannot reach any outside channel at all. When a global model went dark in mid-2026, sovereign systems kept running. That is the point.</p>
+        <h4>Practically</h4>
+        <p>A Mac mini or equivalent hardware at your location runs the local model. Your agents run there. Your data stays there. The only outbound traffic is structurally PHI-free questions and schemas, not records.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" x-show="modal === 'hipaa'" x-transition @click.self="modal = null">
+    <div class="modal-card"><button class="modal-close" @click="modal = null">&#x2715;</button>
+      <div class="modal-title">HIPAA by Design, Not by Filter</div>
+      <div class="modal-body">
+        <p>A de-identification filter is a tool making judgment calls, and a tool can fail and must be defended in an audit. Structural isolation cannot fail the same way.</p>
+        <p>Two zones: a Sealed Zone that holds protected data and never speaks outward, and an Open Zone that never receives protected data by construction. One wall, one code-enforced interface, one thing to prove. You point an auditor at the architecture, not at a log of filter decisions.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" x-show="modal === 'builder'" x-transition @click.self="modal = null">
+    <div class="modal-card"><button class="modal-close" @click="modal = null">&#x2715;</button>
+      <div class="modal-title">The Builder, Not the Deliverable</div>
+      <div class="modal-body">
+        <p>Tribune learns the shape of a problem, never a single record. That is why its knowledge is safely portable across clients and why each build makes the next one faster, without ever moving one client's data to another.</p>
+        <p>The first healthcare back-office encodes how the healthcare category works at the operational level. That structural knowledge transfers to the second healthcare client at no additional discovery cost. Healthcare teaches legal. Legal teaches finance.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" x-show="modal === 'salesleuth'" x-transition @click.self="modal = null">
+    <div class="modal-card"><button class="modal-close" @click="modal = null">&#x2715;</button>
+      <div class="modal-title">For SalesSleuth, Specifically</div>
+      <div class="modal-body">
+        <p>Tribune does not compete with Rohit's framework, it completes it. Rohit built the engine that produces the signals. Tribune builds the operation that delivers them at scale.</p>
+        <p>Production orchestration, monitoring across every portfolio, quality enforcement, and the 24-hour SLA, held by the system. Growth stops meaning headcount.</p>
+        <h4>What that looks like in practice</h4>
+        <p>Rohit's framework produces a buying signal. Tribune's Report Production Orchestrator picks it up, routes it through synthesis and QA, formats it to the 40-year methodology standard, and delivers it to the right account within the SLA window. No human in the loop for the production steps.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" x-show="modal === 'how_built'" x-transition @click.self="modal = null">
+    <div class="modal-card"><button class="modal-close" @click="modal = null">&#x2715;</button>
+      <div class="modal-title">How Tribune Builds It</div>
+      <div class="modal-body">
+        <p>Tribune deploys agents inside the tools your team already uses. No migration. No new platform to learn. The agents show up in Slack, Discord, or Teams and start doing the work.</p>
+        <p>The build follows five phases: Discovery maps the operation. Architecture designs the agent system. Build deploys the agents. Train hardens them against your real workload. Handoff puts you in complete control.</p>
+        <p>The Independence Test at handoff confirms the system runs without Tribune. That is the definition of done.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHOTO LIGHTBOX -->
+  <div class="photo-lightbox" x-show="photoModal" x-transition @click="photoModal = null">
+    <img :src="photoModal" @click.stop />
+  </div>
+
+  <script>
+    const WEBHOOK = 'https://hook.us2.make.com/1f3v9g8v34srq9e2mepdt7k9cqd2p3vq';
+    const AT_TOKEN = 'patmdS2cd9';
+    const AT_BASE  = 'appYLu2SntWBBfEnW';
+    const AT_TABLE = 'tblGmrgf92Ytyu8vH';
+
+    async function postWebhook(payload) {
+      try {
+        await fetch(WEBHOOK, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+      } catch(e){ console.warn('Webhook err',e); }
+    }
+
+    async function postAirtable(fields) {
+      try {
+        await fetch('https://api.airtable.com/v0/' + AT_BASE + '/' + AT_TABLE, {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + AT_TOKEN, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ records: [{ fields }] })
+        });
+      } catch(e){ console.warn('Airtable err',e); }
+    }
+
+    function app() {
+      return {
+        tab: 'proposal', modal: null, photoModal: null, scrolled: false, activeSection: 0,
+        sections: [
+          { id:'hero', label:'Hero' },
+          { id:'problem', label:'Problem' },
+          { id:'what-we-build', label:'What We Build' },
+          { id:'how-we-think', label:'How We Think' },
+          { id:'builder', label:'The Builder' },
+          { id:'the-math', label:'The Math' },
+          { id:'engagement', label:'Engagement' },
+          { id:'team', label:'Team' }
+        ],
+        openPhoto(url){ this.photoModal = url; },
+        openModal(name){ this.modal = name; },
+        init() {
+          const hash = window.location.hash.slice(1);
+          if(hash==='discovery') this.tab='script';
+          else if(hash==='blueprint') this.tab='blueprint';
+          this.$watch('tab', v => {
+            const h = v==='script'?'discovery':v==='blueprint'?'blueprint':'proposal';
+            history.replaceState(null,'','#'+h);
+          });
+          window.addEventListener('scroll', () => {
+            this.scrolled = window.scrollY > 40;
+            this.updateActiveSection();
+          });
+          const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+          }, { threshold: 0.1 });
+          document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+        },
+        updateActiveSection() {
+          const els = this.sections.map(s=>document.getElementById(s.id)).filter(Boolean);
+          let cur = 0;
+          els.forEach((el,i) => { if(el && el.getBoundingClientRect().top < window.innerHeight*0.5) cur=i; });
+          this.activeSection = cur;
+        },
+        scrollToSection(idx) {
+          const el = document.getElementById(this.sections[idx].id);
+          if(el) el.scrollIntoView({ behavior:'smooth' });
+        }
+      }
+    }
+
+    const QUESTIONS = {
+      q_op_flow:       'How does work move from intake to finished output today?',
+      q_op_manual:     'Where does your team spend the most manual hours per week?',
+      q_op_bottleneck: 'What is the highest-value bottleneck you wish you could remove tomorrow?',
+      q_ai_prod:       'What AI tools are currently deployed and running in production?',
+      q_ai_rohit:      "What does Rohit's agentic framework cover today, and what sits outside it?",
+      q_ai_prev:       'Have you attempted to automate any back-office workflows before?',
+      q_del_linear:    'Which part of your delivery process scales linearly with headcount today?',
+      q_del_late:      'What single step most often causes a report or deliverable to be late?',
+      q_del_scale:     'If you doubled your client base tomorrow, where would the system break first?',
+      q_stack_comms:   'Where does your team communicate and coordinate day-to-day?',
+      q_stack_data:    'What CRM and data sources does your sales-intelligence pipeline pull from?',
+      q_stack_nonneg:  'Are there any tools your team would not give up under any circumstances?',
+      q_data_prot:     'Does your operation touch any protected, regulated, or confidential client data?',
+      q_comp_fw:       'What compliance frameworks govern how you handle it?',
+      q_data_handling: 'How is sensitive data currently stored, accessed, and transmitted?',
+      q_ho_vision:     'What does success look like 12 months after we unplug?',
+      q_ho_owner:      'Who on your team will own and run the system after handoff?',
+      q_ho_indep:      'What would need to be true for you to feel fully independent from Tribune?',
+      q_timeline:      'What is your target timeline for having this operational?',
+      q_decision:      'Who else is involved in the decision?',
+      q_budget:        'Is budget allocated, or does this need to go through an approval process?',
+      q_session_notes: 'Session Notes'
+    };
+
+    function scriptApp() {
+      return {
+        submitted: false,
+        qSubmitted: {},
+        qSending: {},
+        answers: {},
+        async submitQ(qId, notesId, category) {
+          this.qSending[qId] = true;
+          const answer = this.answers[qId] || '';
+          const notes  = notesId ? (this.answers[notesId] || '') : '';
+          const question = QUESTIONS[qId] || qId;
+          await Promise.all([
+            postWebhook({
+              client: 'tribune-mk-marsden',
+              type: 'single_question',
+              submitted_at: new Date().toISOString(),
+              question_id: qId,
+              question,
+              selected_answer: answer,
+              notes,
+              category,
+              source: 'tribune-proposal-site'
+            }),
+            postAirtable({
+              'Question ID':         qId,
+              'Question':            question,
+              'Selected Answer':     answer,
+              'Additional Details':  notes,
+              'Category':            category || ''
+            })
+          ]);
+          this.qSubmitted[qId] = true;
+          this.qSending[qId]   = false;
+        },
+        async submitAll() {
+          const allData = Object.keys(QUESTIONS).map(id => ({
+            question_id: id,
+            question: QUESTIONS[id],
+            answer: this.answers[id] || ''
+          })).filter(e => e.answer);
+          await postWebhook({
+            client: 'tribune-mk-marsden',
+            type: 'submit_all',
+            submitted_at: new Date().toISOString(),
+            data: allData,
+            source: 'tribune-proposal-site'
+          });
+          this.submitted = true;
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
