@@ -34,16 +34,20 @@
     .math-context { font-size:0.82rem; color:var(--text-dim); font-style:italic; margin-top:0.75rem; }
     @media(max-width:900px){ .think-grid{grid-template-columns:1fr;} .ai-org-grid{grid-template-columns:repeat(2,1fr);} }
     /* Marcus video */
-    .std-intro-row { display:flex; gap:1.5rem; align-items:flex-start; margin-bottom:1.5rem; }
-    .std-intro-text { flex:1; font-size:0.9rem; color:var(--text-soft); line-height:1.7; }
-    .marcus-teaser { flex-shrink:0; width:220px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:0; overflow:hidden; cursor:pointer; position:relative; text-align:center; transition:box-shadow var(--t); }
+    /* wb two-col: outer intro + toggle + standard text left, marcus portrait right */
+    .wb-two-col { display:flex; gap:2rem; align-items:stretch; margin-bottom:1.5rem; max-width:850px; }
+    .wb-left { flex:1 1 680px; max-width:680px; min-width:0; }
+    .wb-right { flex-shrink:0; width:136px; }
+    .std-intro-text { font-size:0.9rem; color:var(--text-soft); line-height:1.7; margin:0; }
+    /* Marcus portrait teaser */
+    .marcus-teaser { width:100%; height:100%; display:flex; flex-direction:column; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; cursor:pointer; position:relative; text-align:center; transition:box-shadow var(--t); }
     .marcus-teaser:hover { box-shadow:var(--shadow-card),var(--shadow-glow); border-color:var(--border-accent); }
-    .marcus-teaser img { width:100%; display:block; border-radius:var(--radius-lg) var(--radius-lg) 0 0; aspect-ratio:16/9; object-fit:cover; background:#0c0c10; }
-    .play-btn { position:absolute; top:50%; left:50%; transform:translate(-50%,-60%); width:44px; height:44px; border-radius:50%; background:var(--crimson); color:#fff; font-size:1.1rem; display:flex; align-items:center; justify-content:center; animation:pulse 2s ease-in-out infinite; padding-left:3px; }
+    .marcus-teaser img { width:100%; flex:1; display:block; aspect-ratio:9/16; object-fit:contain; object-position:center center; background:#0c0c10; min-height:120px; }
+    .play-btn { position:absolute; top:calc(50% - 28px); left:50%; transform:translate(-50%,-50%); width:44px; height:44px; border-radius:50%; background:var(--crimson); color:#fff; font-size:1.1rem; display:flex; align-items:center; justify-content:center; animation:pulse 2s ease-in-out infinite; padding-left:3px; pointer-events:none; }
     @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(196,30,58,0.4);} 50%{box-shadow:0 0 0 10px rgba(196,30,58,0);} }
-    .teaser-caption { display:block; font-size:0.82rem; font-weight:700; color:var(--text); padding:0.5rem 0.75rem 0.1rem; }
-    .teaser-hint { display:block; font-size:0.72rem; color:var(--text-dim); padding:0 0.75rem 0.75rem; }
-    @media(max-width:680px){ .std-intro-row{flex-direction:column;} .marcus-teaser{width:100%;} }
+    .teaser-caption { display:block; font-size:0.82rem; font-weight:700; color:var(--text); padding:0.5rem 0.75rem 0.1rem; flex-shrink:0; }
+    .teaser-hint { display:block; font-size:0.72rem; color:var(--text-dim); padding:0 0.75rem 0.75rem; flex-shrink:0; }
+    @media(max-width:680px){ .wb-two-col{flex-direction:column;} .wb-right{width:100%;max-width:260px;} .marcus-teaser{height:auto;} .marcus-teaser img{aspect-ratio:9/16;flex:unset;} }
   </style>
 </head>
 <body x-data="app()" x-init="init()">
@@ -148,24 +152,35 @@
       <div class="container">
         <p class="section-label fade-in">What Tribune Builds</p>
         <h2 class="section-headline fade-in">One Builder. Two Editions. Built for How Your Business Is Regulated.</h2>
-        <p style="color:var(--text-soft);font-size:0.95rem;line-height:1.75;max-width:680px;margin-bottom:1.5rem;" class="fade-in">Every Tribune build is a complete agentic back-office. The edition depends on one question: does your operation touch protected data? If it does, we build the Regulated edition. If it does not, we build the Standard edition.</p>
-        <div class="edition-toggle fade-in">
-          <button class="edition-btn" :class="{ active: edition === 'standard' }" @click="edition = 'standard'">Standard</button>
-          <button class="edition-btn" :class="{ active: edition === 'regulated' }" @click="edition = 'regulated'">Regulated</button>
-        </div>
-
-        <!-- STANDARD -->
-        <div x-show="edition === 'standard'">
-          <p class="edition-subhead">Cloud-flexible. Fastest to deploy. Same engineering rigor.</p>
-          <div class="std-intro-row">
-            <p class="std-intro-text">You have already built the intelligence product. Your platform produces the signals. Tribune builds the operation that delivers them at scale, the layer between a great report and a great report shipped to every account, every day, without growing headcount to match.</p>
+        <!-- Two-col: text left, Marcus portrait right (Standard only) -->
+        <div class="wb-two-col fade-in">
+          <div class="wb-left">
+            <p style="color:var(--text-soft);font-size:0.95rem;line-height:1.75;margin-bottom:1.25rem;">Every Tribune build is a complete agentic back-office. The edition depends on one question: does your operation touch protected data? If it does, we build the Regulated edition. If it does not, we build the Standard edition.</p>
+            <div class="edition-toggle" style="margin-bottom:1.25rem;">
+              <button class="edition-btn" :class="{ active: edition === 'standard' }" @click="edition = 'standard'">Standard</button>
+              <button class="edition-btn" :class="{ active: edition === 'regulated' }" @click="edition = 'regulated'">Regulated</button>
+            </div>
+            <div x-show="edition === 'standard'">
+              <p class="edition-subhead" style="margin-bottom:0.75rem;">Cloud-flexible. Fastest to deploy. Same engineering rigor.</p>
+              <p class="std-intro-text">You have already built the intelligence product. Your platform produces the signals. Tribune builds the operation that delivers them at scale, the layer between a great report and a great report shipped to every account, every day, without growing headcount to match.</p>
+            </div>
+            <div x-show="edition === 'regulated'">
+              <p class="edition-subhead">Protected data physically partitioned. On-premise. BAA-backed.</p>
+            </div>
+          </div>
+          <!-- Marcus portrait card: Standard only -->
+          <div class="wb-right" x-show="edition === 'standard'">
             <button class="marcus-teaser" onclick="openMarcusVideo()" aria-label="Play Marcus intro video">
-              <img src="https://res.cloudinary.com/dthdxjmgb/video/upload/so_2,w_480,c_scale,f_jpg,q_80/v1781577528/mk-marsden-marcus-intro-v1_xepfgk.jpg" alt="Marcus, AI Chief Executive" />
+              <img src="https://res.cloudinary.com/dthdxjmgb/video/upload/so_2,h_640,c_scale,f_jpg,q_80/v1781577528/mk-marsden-marcus-intro-v1_xepfgk.jpg" alt="Marcus, AI Chief Executive" />
               <span class="play-btn" aria-hidden="true">&#9654;</span>
               <span class="teaser-caption">A word from Marcus.</span>
               <span class="teaser-hint">60 seconds. Click to play.</span>
             </button>
           </div>
+        </div>
+
+        <!-- STANDARD tiles -->
+        <div x-show="edition === 'standard'">
           <div class="tile-grid">
             <div class="tile fade-in">
               <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="8" width="32" height="24" rx="2"/><line x1="4" y1="16" x2="36" y2="16"/><line x1="14" y1="8" x2="14" y2="32"/></svg>
@@ -207,7 +222,6 @@
 
         <!-- REGULATED -->
         <div x-show="edition === 'regulated'">
-          <p class="edition-subhead">Protected data physically partitioned. On-premise. BAA-backed.</p>
           <div class="tile-grid">
             <div class="tile fade-in">
               <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 4L6 10v12c0 8 6 14 14 16 8-2 14-8 14-16V10L20 4z"/><polyline points="14 20 18 24 26 16"/></svg>
