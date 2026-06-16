@@ -33,6 +33,17 @@
     .math-prose { font-size:0.92rem; color:var(--text-soft); line-height:1.75; max-width:700px; margin:1.5rem 0; }
     .math-context { font-size:0.82rem; color:var(--text-dim); font-style:italic; margin-top:0.75rem; }
     @media(max-width:900px){ .think-grid{grid-template-columns:1fr;} .ai-org-grid{grid-template-columns:repeat(2,1fr);} }
+    /* Marcus video */
+    .std-intro-row { display:flex; gap:1.5rem; align-items:flex-start; margin-bottom:1.5rem; }
+    .std-intro-text { flex:1; font-size:0.9rem; color:var(--text-soft); line-height:1.7; }
+    .marcus-teaser { flex-shrink:0; width:220px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:0; overflow:hidden; cursor:pointer; position:relative; text-align:center; transition:box-shadow var(--t); }
+    .marcus-teaser:hover { box-shadow:var(--shadow-card),var(--shadow-glow); border-color:var(--border-accent); }
+    .marcus-teaser img { width:100%; display:block; border-radius:var(--radius-lg) var(--radius-lg) 0 0; aspect-ratio:16/9; object-fit:cover; background:#0c0c10; }
+    .play-btn { position:absolute; top:50%; left:50%; transform:translate(-50%,-60%); width:44px; height:44px; border-radius:50%; background:var(--crimson); color:#fff; font-size:1.1rem; display:flex; align-items:center; justify-content:center; animation:pulse 2s ease-in-out infinite; padding-left:3px; }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(196,30,58,0.4);} 50%{box-shadow:0 0 0 10px rgba(196,30,58,0);} }
+    .teaser-caption { display:block; font-size:0.82rem; font-weight:700; color:var(--text); padding:0.5rem 0.75rem 0.1rem; }
+    .teaser-hint { display:block; font-size:0.72rem; color:var(--text-dim); padding:0 0.75rem 0.75rem; }
+    @media(max-width:680px){ .std-intro-row{flex-direction:column;} .marcus-teaser{width:100%;} }
   </style>
 </head>
 <body x-data="app()" x-init="init()">
@@ -146,7 +157,15 @@
         <!-- STANDARD -->
         <div x-show="edition === 'standard'">
           <p class="edition-subhead">Cloud-flexible. Fastest to deploy. Same engineering rigor.</p>
-          <p style="font-size:0.9rem;color:var(--text-soft);line-height:1.7;margin-bottom:1.5rem;max-width:680px;">You have already built the intelligence product. Rohit's agentic framework produces the signals. Tribune builds the operation that delivers them at scale, the layer between a great report and a great report shipped to every account, every day, without growing headcount to match.</p>
+          <div class="std-intro-row">
+            <p class="std-intro-text">You have already built the intelligence product. Your platform produces the signals. Tribune builds the operation that delivers them at scale, the layer between a great report and a great report shipped to every account, every day, without growing headcount to match.</p>
+            <button class="marcus-teaser" onclick="openMarcusVideo()" aria-label="Play Marcus intro video">
+              <img src="MARCUS_POSTER_URL" alt="Marcus, AI Chief Executive" />
+              <span class="play-btn" aria-hidden="true">&#9654;</span>
+              <span class="teaser-caption">A word from Marcus.</span>
+              <span class="teaser-hint">60 seconds. Click to play.</span>
+            </button>
+          </div>
           <div class="tile-grid">
             <div class="tile fade-in">
               <svg class="tile-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="8" width="32" height="24" rx="2"/><line x1="4" y1="16" x2="36" y2="16"/><line x1="14" y1="8" x2="14" y2="32"/></svg>
@@ -407,18 +426,18 @@
           </div>
           <div class="pricing-card fade-in">
             <div class="pricing-tier">Full Build</div>
-            <div class="pricing-price">$25k–$75k</div>
+            <div class="pricing-price">$25k to $75k</div>
             <div class="pricing-desc">Three to eight custom agents deployed on your existing infrastructure. The complete five-phase delivery, including the Independence Test. Four to eight weeks.</div>
             <div class="pricing-note">Discovery deposit credited at signing.</div>
           </div>
           <div class="pricing-card fade-in">
             <div class="pricing-tier">Retainer</div>
-            <div class="pricing-price">$3k–$8k<span>/mo</span></div>
+            <div class="pricing-price">$3k to $8k<span> / mo</span></div>
             <div class="pricing-desc">Optional ongoing evolution, expansion, and support. The system keeps learning your operation.</div>
           </div>
           <div class="pricing-card fade-in">
             <div class="pricing-tier">Channel Partner</div>
-            <div class="pricing-price">20–25%</div>
+            <div class="pricing-price">20% to 25%</div>
             <div class="pricing-desc">For partners who bring Tribune to the businesses in their network. A new revenue line for solving a real problem for your clients.</div>
             <div class="pricing-note">of deal value</div>
           </div>
@@ -564,7 +583,7 @@
       <!-- D2: AI Maturity -->
       <div class="discovery-block">
         <h2 class="discovery-heading">Your AI Maturity</h2>
-        <p class="discovery-intro">What is deployed and running versus experimental. What Rohit's framework covers today.</p>
+        <p class="discovery-intro">What is deployed and running versus experimental, and what your platform covers today.</p>
         <div class="question-card">
           <div class="question-number">Q4</div>
           <div class="question-text">What AI tools or systems are currently deployed and running in production?</div>
@@ -579,9 +598,9 @@
         </div>
         <div class="question-card">
           <div class="question-number">Q5</div>
-          <div class="question-text">What does Rohit's agentic framework cover today, and what sits outside it?</div>
+          <div class="question-text">What does your agentic framework cover today, and what sits outside it?</div>
           <div class="question-why"><strong>Why we ask</strong>Tribune builds the operations layer around the intelligence layer, not on top of it.</div>
-          <div class="intake-field"><textarea class="notes-input" placeholder="Describe Rohit's framework scope..." x-model="answers.q_ai_rohit" rows="3"></textarea></div>
+          <div class="intake-field"><textarea class="notes-input" placeholder="Describe your framework scope..." x-model="answers.q_ai_rohit" rows="3"></textarea></div>
           <div class="notes-field"><textarea class="notes-input" placeholder="Add notes..." x-model="answers.q_ai_rohit_notes" rows="2"></textarea>
             <div class="q-submit-row">
               <button class="btn q-submit-btn" :class="qSubmitted.q_ai_rohit ? 'q-submitted' : 'btn-ghost'" :disabled="qSending.q_ai_rohit||qSubmitted.q_ai_rohit" @click="submitQ('q_ai_rohit','q_ai_rohit_notes','AI Maturity')"><span x-text="qSending.q_ai_rohit?'Saving...':qSubmitted.q_ai_rohit?'Saved \u2713':'Save'"></span></button>
@@ -943,10 +962,10 @@
     <div class="modal-card"><button class="modal-close" @click="modal = null">&#x2715;</button>
       <div class="modal-title">For SalesSleuth, Specifically</div>
       <div class="modal-body">
-        <p>Tribune does not compete with Rohit's framework, it completes it. Rohit built the engine that produces the signals. Tribune builds the operation that delivers them at scale.</p>
+        <p>Tribune does not compete with your framework, it completes it. Your platform produces the signals. Tribune builds the operation that delivers them at scale.</p>
         <p>Production orchestration, monitoring across every portfolio, quality enforcement, and the 24-hour SLA, held by the system. Growth stops meaning headcount.</p>
         <h4>What that looks like in practice</h4>
-        <p>Rohit's framework produces a buying signal. Tribune's Report Production Orchestrator picks it up, routes it through synthesis and QA, formats it to the 40-year methodology standard, and delivers it to the right account within the SLA window. No human in the loop for the production steps.</p>
+        <p>Your framework produces a buying signal. Tribune's Report Production Orchestrator picks it up, routes it through synthesis and QA, formats it to the 40-year methodology standard, and delivers it to the right account within the SLA window. No human in the loop for the production steps.</p>
       </div>
     </div>
   </div>
@@ -959,6 +978,16 @@
         <p>The build follows five phases: Discovery maps the operation. Architecture designs the agent system. Build deploys the agents. Train hardens them against your real workload. Handoff puts you in complete control.</p>
         <p>The Independence Test at handoff confirms the system runs without Tribune. That is the definition of done.</p>
       </div>
+    </div>
+  </div>
+
+  <!-- MARCUS VIDEO MODAL -->
+  <div id="marcus-modal" class="modal-overlay" style="display:none;" onclick="if(event.target===this)closeMarcusVideo()">
+    <div class="modal-card" style="max-width:720px;background:#000;border-color:#333;padding:0;overflow:hidden;">
+      <button class="modal-close" onclick="closeMarcusVideo()" style="color:#fff;background:rgba(255,255,255,0.1);">&#x2715;</button>
+      <video id="marcus-video" controls playsinline style="width:100%;display:block;border-radius:var(--radius-lg);">
+        <source src="MARCUS_VIDEO_URL" type="video/mp4" />
+      </video>
     </div>
   </div>
 
@@ -1039,7 +1068,7 @@
       q_op_manual:     'Where does your team spend the most manual hours per week?',
       q_op_bottleneck: 'What is the highest-value bottleneck you wish you could remove tomorrow?',
       q_ai_prod:       'What AI tools are currently deployed and running in production?',
-      q_ai_rohit:      "What does Rohit's agentic framework cover today, and what sits outside it?",
+      q_ai_rohit:      "What does your agentic framework cover today, and what sits outside it?",
       q_ai_prev:       'Have you attempted to automate any back-office workflows before?',
       q_del_linear:    'Which part of your delivery process scales linearly with headcount today?',
       q_del_late:      'What single step most often causes a report or deliverable to be late?',
@@ -1058,6 +1087,23 @@
       q_budget:        'Is budget allocated, or does this need to go through an approval process?',
       q_session_notes: 'Session Notes'
     };
+
+    function openMarcusVideo() {
+      const modal = document.getElementById('marcus-modal');
+      const video = document.getElementById('marcus-video');
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      video.play();
+    }
+    function closeMarcusVideo() {
+      const modal = document.getElementById('marcus-modal');
+      const video = document.getElementById('marcus-video');
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+      video.pause();
+      video.currentTime = 0;
+    }
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeMarcusVideo(); });
 
     function scriptApp() {
       return {
